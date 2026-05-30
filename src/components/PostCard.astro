@@ -1,5 +1,6 @@
 ---
 import PostMeta from './PostMeta.astro';
+import { url } from '../lib/url';
 
 export interface Props {
   title: string;
@@ -15,7 +16,7 @@ const { title, description, pubDate, updatedDate, tags, slug, readingMinutes } =
   Astro.props;
 ---
 <article class="post-card">
-  <a href={`/posts/${slug}`} class="title-link">
+  <a href={url(`/posts/${slug}`)} class="title-link">
     <h2>{title}</h2>
   </a>
   <PostMeta {pubDate} {updatedDate} {readingMinutes} {tags} />

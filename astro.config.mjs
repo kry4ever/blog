@@ -8,7 +8,8 @@ import {
 } from '@shikijs/transformers';
 
 export default defineConfig({
-  site: 'https://blog.479718269.workers.dev',
+  site: 'https://kry4ever.github.io',
+  base: '/blog',
   trailingSlash: 'never',
   build: { format: 'directory' },
   integrations: [mdx(), sitemap()],

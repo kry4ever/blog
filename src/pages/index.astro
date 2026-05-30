@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PinnedPostCard from '../components/PinnedPostCard.astro';
 import { getPinnedPosts } from '../lib/getPosts';
 import { SITE } from '../lib/site';
+import { url } from '../lib/url';
 
 const pinned = await getPinnedPosts();
 ---
@@ -14,7 +15,7 @@ const pinned = await getPinnedPosts();
 
   <section class="pinned">
     {pinned.length === 0 ? (
-      <p class="empty">还没有推荐文章,去 <a href="/archive">归档</a> 看看。</p>
+      <p class="empty">还没有推荐文章,去 <a href={url('/archive')}>归档</a> 看看。</p>
     ) : (
       pinned.map((post) => (
         <PinnedPostCard
@@ -32,7 +33,7 @@ const pinned = await getPinnedPosts();
   </section>
 
   <p class="see-all">
-    <a href="/archive">查看全部 →</a>
+    <a href={url('/archive')}>查看全部 →</a>
   </p>
 </BaseLayout>
 

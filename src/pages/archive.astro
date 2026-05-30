@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getAllPosts } from '../lib/getPosts';
+import { url } from '../lib/url';
 
 const posts = await getAllPosts();
 
@@ -23,7 +24,7 @@ const fmt = (d: Date) => d.toISOString().slice(5, 10); // MM-DD
         {posts.map((p) => (
           <li>
             <time datetime={p.data.pubDate.toISOString()}>{fmt(p.data.pubDate)}</time>
-            <a href={`/posts/${p.id}`}>{p.data.title}</a>
+            <a href={url(`/posts/${p.id}`)}>{p.data.title}</a>
           </li>
         ))}
       </ul>

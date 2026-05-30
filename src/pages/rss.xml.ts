@@ -2,6 +2,7 @@
 import rss from '@astrojs/rss';
 import { getAllPosts } from '../lib/getPosts';
 import { SITE } from '../lib/site';
+import { url } from '../lib/url';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
@@ -15,7 +16,7 @@ export async function GET(context: APIContext) {
       title: post.data.title,
       pubDate: post.data.pubDate,
       description: post.data.description,
-      link: `/posts/${post.id}`,
+      link: url(`/posts/${post.id}`),
       content: (post as any).body ?? '', // 完整正文(Markdown 源码;读者用 RSS 阅读器多数能正确渲染)
     })),
     customData: `<language>${SITE.language}</language>`,

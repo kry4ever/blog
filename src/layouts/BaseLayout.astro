@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../lib/site';
+import { url } from '../lib/url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -22,8 +23,8 @@ const {
 const fullTitle = title === SITE.title ? title : `${title} — ${SITE.title}`;
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 const ogImageUrl = ogImage
-  ? new URL(ogImage, SITE.url).toString()
-  : new URL('/og-default.png', SITE.url).toString();
+  ? new URL(url(ogImage), SITE.url).toString()
+  : new URL(url('/og-default.png'), SITE.url).toString();
 ---
 <!doctype html>
 <html lang={SITE.language}>
@@ -33,7 +34,7 @@ const ogImageUrl = ogImage
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
 
     <!-- OpenGraph -->
     <meta property="og:title" content={fullTitle} />
@@ -50,7 +51,7 @@ const ogImageUrl = ogImage
       rel="alternate"
       type="application/rss+xml"
       title={SITE.title}
-      href="/rss.xml"
+      href={url('/rss.xml')}
     />
 
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}

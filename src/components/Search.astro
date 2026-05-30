@@ -1,3 +1,8 @@
+---
+import { url } from '../lib/url';
+const pagefindUiJs = url('/pagefind/pagefind-ui.js');
+const pagefindUiCss = url('/pagefind/pagefind-ui.css');
+---
 <button id="search-toggle" type="button" aria-label="打开搜索">🔍</button>
 
 <div id="search-modal" class="search-modal" hidden>
@@ -7,7 +12,7 @@
   </div>
 </div>
 
-<script is:inline>
+<script is:inline define:vars={{ pagefindUiJs }}>
   // 按需加载 Pagefind UI:首次唤起搜索时才下载 ~70KB。
   let pagefindLoaded = false;
 
@@ -16,7 +21,7 @@
     pagefindLoaded = true;
     // pagefind UI 通过 module import 加载
     // @ts-ignore - pagefind UI 由构建产物提供,typecheck 时不存在
-    const { PagefindUI } = await import(/* @vite-ignore */ '/pagefind/pagefind-ui.js');
+    const { PagefindUI } = await import(/* @vite-ignore */ pagefindUiJs);
     new PagefindUI({
       element: '#pagefind-search',
       showImages: false,
@@ -55,7 +60,7 @@
   });
 </script>
 
-<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<link rel="stylesheet" href={pagefindUiCss} />
 
 <style>
   #search-toggle {
