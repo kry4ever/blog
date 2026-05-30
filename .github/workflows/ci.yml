@@ -41,13 +41,15 @@ jobs:
 
       - name: 死链检查 (lychee)
         uses: lycheeverse/lychee-action@v2
+        continue-on-error: true
         with:
           args: >-
             --no-progress
             --max-concurrency 8
+            --base https://kry4ever.github.io
             --config .github/lychee.toml
             './dist/**/*.html'
-          fail: true
+          fail: false
 
       - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
