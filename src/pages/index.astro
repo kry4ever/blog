@@ -1,8 +1,57 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PinnedPostCard from '../components/PinnedPostCard.astro';
+import { getPinnedPosts } from '../lib/getPosts';
 import { SITE } from '../lib/site';
+
+const pinned = await getPinnedPosts();
 ---
 <BaseLayout title={SITE.title}>
-  <h1>{SITE.title}</h1>
-  <p>{SITE.bio}</p>
+  <section class="intro">
+    <h1>{SITE.title}</h1>
+    <p>{SITE.bio}</p>
+  </section>
+
+  <section class="pinned">
+    {pinned.length === 0 ? (
+      <p class="empty">还没有推荐文章,去 <a href="/archive">归档</a> 看看。</p>
+    ) : (
+      pinned.map((post) => (
+        <PinnedPostCard
+          title={post.data.title}
+          description={post.data.description}
+          overview={post.data.overview}
+          pubDate={post.data.pubDate}
+          updatedDate={post.data.updatedDate}
+          tags={post.data.tags}
+          slug={post.id}
+          readingMinutes={post.readingMinutes}
+        />
+      ))
+    )}
+  </section>
+
+  <p class="see-all">
+    <a href="/archive">查看全部 →</a>
+  </p>
 </BaseLayout>
+
+<style>
+  .intro {
+    margin-bottom: 32px;
+  }
+  .intro h1 {
+    font-size: 1.6rem;
+  }
+  .intro p {
+    color: var(--color-text-muted);
+  }
+  .empty {
+    color: var(--color-text-muted);
+    padding: 24px 0;
+  }
+  .see-all {
+    margin-top: 32px;
+    text-align: right;
+  }
+</style>
