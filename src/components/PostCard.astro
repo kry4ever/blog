@@ -1,0 +1,40 @@
+---
+import PostMeta from './PostMeta.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags: string[];
+  slug: string;
+  readingMinutes: number;
+}
+
+const { title, description, pubDate, updatedDate, tags, slug, readingMinutes } =
+  Astro.props;
+---
+<article class="post-card">
+  <a href={`/posts/${slug}`} class="title-link">
+    <h2>{title}</h2>
+  </a>
+  <PostMeta {pubDate} {updatedDate} {readingMinutes} {tags} />
+  {description && <p class="desc">{description}</p>}
+</article>
+
+<style>
+  .post-card {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .post-card:last-child { border-bottom: none; }
+  .title-link { color: var(--color-text); }
+  .post-card h2 {
+    font-size: 1.25rem;
+    margin: 0 0 8px;
+  }
+  .post-card .desc {
+    color: var(--color-text-muted);
+    margin: 8px 0 0;
+  }
+</style>

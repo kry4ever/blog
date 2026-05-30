@@ -1,0 +1,58 @@
+---
+import PostMeta from './PostMeta.astro';
+import { renderInlineMarkdown } from '../lib/inlineMarkdown';
+
+export interface Props {
+  title: string;
+  description: string;
+  overview?: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags: string[];
+  slug: string;
+  readingMinutes: number;
+}
+
+const {
+  title, description, overview, pubDate, updatedDate, tags, slug, readingMinutes,
+} = Astro.props;
+
+const overviewHtml = renderInlineMarkdown(overview);
+
+if (overview && !overviewHtml) {
+  // 不阻塞构建,只警告
+  console.warn(`[PinnedPostCard] overview present but rendered empty for slug "${slug}"`);
+}
+---
+<article class="pinned-card">
+  <a href={`/posts/${slug}`} class="title-link">
+    <h2>{title}</h2>
+  </a>
+  <PostMeta {pubDate} {updatedDate} {readingMinutes} {tags} />
+  <p class="desc">{description}</p>
+  {overviewHtml && (
+    <p class="overview" set:html={overviewHtml} />
+  )}
+</article>
+
+<style>
+  .pinned-card {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .pinned-card:last-child { border-bottom: none; }
+  .title-link { color: var(--color-text); }
+  .pinned-card h2 {
+    font-size: 1.4rem;
+    margin: 0 0 8px;
+  }
+  .desc {
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin: 8px 0;
+  }
+  .overview {
+    margin: 12px 0 0;
+    line-height: 1.7;
+  }
+</style>

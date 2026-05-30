@@ -1,0 +1,32 @@
+---
+import TagList from './TagList.astro';
+
+export interface Props {
+  pubDate: Date;
+  updatedDate?: Date;
+  readingMinutes: number;
+  tags: string[];
+}
+
+const { pubDate, updatedDate, readingMinutes, tags } = Astro.props;
+
+const fmt = (d: Date) =>
+  d.toISOString().slice(0, 10);
+---
+<div class="post-meta">
+  <time datetime={pubDate.toISOString()}>{fmt(pubDate)}</time>
+  <span> · </span>
+  <span>{readingMinutes} min read</span>
+  {updatedDate && (
+    <>
+      <span> · </span>
+      <span>updated {fmt(updatedDate)}</span>
+    </>
+  )}
+  {tags.length > 0 && (
+    <>
+      <span> · </span>
+      <TagList tags={tags} />
+    </>
+  )}
+</div>
