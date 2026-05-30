@@ -6,7 +6,7 @@ export const SITE = {
   description: '关于编程、系统、与读源码的笔记。',
   author: '站点作者',
   // 部署后填实际 URL；本地开发用占位
-  url: 'https://example.pages.dev',
+  url: 'https://blog.479718269.workers.dev',
   // 首页副标题（自我介绍）
   bio: '工程师 / 在这里记一些想清楚之后的笔记。',
   // RSS 中显示的语言

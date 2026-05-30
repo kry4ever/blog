@@ -8,7 +8,7 @@ import {
 } from '@shikijs/transformers';
 
 export default defineConfig({
-  site: 'https://example.pages.dev',
+  site: 'https://blog.479718269.workers.dev',
   trailingSlash: 'never',
   build: { format: 'directory' },
   integrations: [mdx(), sitemap()],

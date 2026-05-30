@@ -11,7 +11,8 @@
     "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "check": "astro check",
-    "test": "vitest run"
+    "test": "vitest run",
+    "deploy": "pnpm run build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
@@ -26,6 +27,7 @@
     "@shikijs/transformers": "^4.1.0",
     "@types/node": "^25.9.1",
     "pagefind": "^1.5.2",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.7",
+    "wrangler": "^4.95.0"
   }
 }
