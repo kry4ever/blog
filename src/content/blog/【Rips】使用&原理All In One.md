@@ -2,7 +2,8 @@
 title: "【Rips】使用&原理All In One"
 pubDate: 2026-05-30
 description: "Rips 是一个轻量级的页面内组件化框架，本文介绍其使用方式与实现原理。"
-tags: ["rips", "android"]
+tags: ["架构", "android"]
+pinned: true
 overview: |
   一句话描述，Rips 是一个轻量级的页面内的组件化框架，可以基于页面内以 view 作为维度，拆分成逻辑独立的组件以达到逻辑解耦、复用等目的。可以认为是"更轻量级的 fragment"。
 ---
