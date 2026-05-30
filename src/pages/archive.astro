@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAllPosts } from '../lib/getPosts';
+
+const posts = await getAllPosts();
+
+// 按年份分组(已是降序),保持降序遍历后产出按年降序的 Map
+const byYear = new Map<number, typeof posts>();
+for (const p of posts) {
+  const y = p.data.pubDate.getFullYear();
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(p);
+}
+
+const fmt = (d: Date) => d.toISOString().slice(5, 10); // MM-DD
+---
+<BaseLayout title="归档" description="全部文章按年份归档">
+  <h1>归档</h1>
+  {[...byYear.entries()].map(([year, posts]) => (
+    <section class="year-section">
+      <h2>{year}</h2>
+      <ul class="archive-list">
+        {posts.map((p) => (
+          <li>
+            <time datetime={p.data.pubDate.toISOString()}>{fmt(p.data.pubDate)}</time>
+            <a href={`/posts/${p.id}`}>{p.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</BaseLayout>
+
+<style>
+  .year-section { margin-bottom: 32px; }
+  .year-section h2 {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 6px;
+  }
+  .archive-list {
+    list-style: none;
+    padding: 0;
+  }
+  .archive-list li {
+    display: flex;
+    gap: 16px;
+    padding: 6px 0;
+  }
+  .archive-list time {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    min-width: 60px;
+  }
+</style>
