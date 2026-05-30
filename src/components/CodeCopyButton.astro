@@ -1,0 +1,42 @@
+<script>
+  document.querySelectorAll('main pre').forEach((pre) => {
+    if (pre.querySelector('.copy-btn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy code to clipboard');
+    btn.addEventListener('click', async () => {
+      const code = pre.querySelector('code')?.innerText ?? '';
+      try {
+        await navigator.clipboard.writeText(code);
+        btn.textContent = 'Copied';
+        setTimeout(() => (btn.textContent = 'Copy'), 1500);
+      } catch {
+        btn.textContent = 'Failed';
+        setTimeout(() => (btn.textContent = 'Copy'), 1500);
+      }
+    });
+    (pre as HTMLElement).appendChild(btn);
+  });
+</script>
+
+<style is:global>
+  main pre { position: relative; }
+  main pre .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  main pre:hover .copy-btn { opacity: 1; }
+  main pre .copy-btn:hover { color: var(--color-accent); }
+</style>

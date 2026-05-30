@@ -1,0 +1,51 @@
+---
+export interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+const { headings } = Astro.props;
+const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+{items.length > 0 && (
+  <nav class="toc" aria-label="目录">
+    <p class="toc-title">目录</p>
+    <ul>
+      {items.map((h) => (
+        <li class={`depth-${h.depth}`}>
+          <a href={`#${h.slug}`}>{h.text}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  .toc {
+    font-size: 0.9rem;
+  }
+  .toc-title {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    margin: 0 0 8px;
+  }
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .toc li { margin: 4px 0; }
+  .toc li.depth-3 { padding-left: 14px; }
+  .toc a {
+    color: var(--color-text-muted);
+  }
+  .toc a:hover { color: var(--color-accent); }
+
+  @media (min-width: 1024px) {
+    .toc {
+      position: sticky;
+      top: 24px;
+    }
+  }
+</style>
