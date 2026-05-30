@@ -9,12 +9,15 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist",
-    "preview": "astro preview",
+    "preview": "pnpm run build && wrangler dev",
     "check": "astro check",
-    "test": "vitest run"
+    "test": "vitest run",
+    "generate-types": "wrangler types",
+    "deploy": "pnpm run build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
+    "@astrojs/cloudflare": "^13.6.0",
     "@astrojs/mdx": "^6.0.1",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.3",
@@ -26,6 +29,10 @@
     "@shikijs/transformers": "^4.1.0",
     "@types/node": "^25.9.1",
     "pagefind": "^1.5.2",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.7",
+    "wrangler": "^4.95.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }

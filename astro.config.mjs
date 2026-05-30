@@ -7,11 +7,14 @@ import {
   transformerMetaHighlight,
 } from '@shikijs/transformers';
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
   site: 'https://example.pages.dev',
   trailingSlash: 'never',
   build: { format: 'directory' },
   integrations: [mdx(), sitemap()],
+
   markdown: {
     shikiConfig: {
       theme: 'github-light',
@@ -23,4 +26,6 @@ export default defineConfig({
       ],
     },
   },
+
+  adapter: cloudflare(),
 });
