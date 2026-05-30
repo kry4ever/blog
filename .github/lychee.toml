@@ -1,0 +1,13 @@
+# .github/lychee.toml
+# 死链检查配置:容忍临时网络抖动,排除 localhost 等
+
+max_retries = 2
+retry_wait_time = 5
+timeout = 20
+
+# 排除常见私有/本地链接
+exclude = [
+  "^https?://localhost",
+  "^https?://127\\.0\\.0\\.1",
+  "^https?://0\\.0\\.0\\.0",
+]
