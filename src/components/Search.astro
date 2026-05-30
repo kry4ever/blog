@@ -1,0 +1,91 @@
+<button id="search-toggle" type="button" aria-label="打开搜索">🔍</button>
+
+<div id="search-modal" class="search-modal" hidden>
+  <div class="search-overlay" data-close></div>
+  <div class="search-panel">
+    <div id="pagefind-search"></div>
+  </div>
+</div>
+
+<script is:inline>
+  // 按需加载 Pagefind UI:首次唤起搜索时才下载 ~70KB。
+  let pagefindLoaded = false;
+
+  async function ensurePagefind() {
+    if (pagefindLoaded) return;
+    pagefindLoaded = true;
+    // pagefind UI 通过 module import 加载
+    // @ts-ignore - pagefind UI 由构建产物提供,typecheck 时不存在
+    const { PagefindUI } = await import(/* @vite-ignore */ '/pagefind/pagefind-ui.js');
+    new PagefindUI({
+      element: '#pagefind-search',
+      showImages: false,
+      showSubResults: true,
+      translations: {
+        placeholder: '搜索文章...',
+        zero_results: '没有找到匹配的结果',
+      },
+    });
+  }
+
+  function openSearch() {
+    document.getElementById('search-modal')?.removeAttribute('hidden');
+    ensurePagefind();
+    setTimeout(() => {
+      const input = document.querySelector('#pagefind-search input');
+      input?.focus();
+    }, 50);
+  }
+
+  function closeSearch() {
+    document.getElementById('search-modal')?.setAttribute('hidden', '');
+  }
+
+  document.getElementById('search-toggle')?.addEventListener('click', openSearch);
+  document.querySelectorAll('[data-close]').forEach((el) =>
+    el.addEventListener('click', closeSearch)
+  );
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      openSearch();
+    } else if (e.key === 'Escape') {
+      closeSearch();
+    }
+  });
+</script>
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+
+<style>
+  #search-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 16px;
+    padding: 0;
+    color: var(--color-text-muted);
+  }
+  #search-toggle:hover { color: var(--color-accent); }
+
+  .search-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+  }
+  .search-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+  }
+  .search-panel {
+    position: relative;
+    max-width: 640px;
+    margin: 80px auto 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  }
+</style>

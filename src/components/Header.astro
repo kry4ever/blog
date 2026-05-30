@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../lib/site';
+import Search from './Search.astro';
 ---
 <header class="site-header">
   <div class="inner">
@@ -9,14 +10,13 @@ import { SITE } from '../lib/site';
       <a href="/tags">标签</a>
       <a href="/about">关于</a>
       <a href="/rss.xml" aria-label="RSS feed">RSS</a>
+      <Search />
     </nav>
   </div>
 </header>
 
 <style>
-  .site-header {
-    border-bottom: 1px solid var(--color-border);
-  }
+  .site-header { border-bottom: 1px solid var(--color-border); }
   .inner {
     max-width: var(--max-content-width);
     margin: 0 auto;
@@ -25,10 +25,8 @@ import { SITE } from '../lib/site';
     align-items: center;
     justify-content: space-between;
   }
-  .brand {
-    font-weight: 600;
-    color: var(--color-text);
-  }
+  .brand { font-weight: 600; color: var(--color-text); }
+  nav { display: flex; align-items: center; }
   nav a {
     margin-left: 16px;
     color: var(--color-text-muted);
